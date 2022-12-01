@@ -16,13 +16,24 @@ class ProductManager {
             code,
             stock,
           };
-          
+
           if (title == "" || description == "" || price == "" || thumbnail == "" || code == "" || stock== "" ) {
             console.log ("Incomplete data");
        
           } else {
-            this.products.push (product);
-            console.log (this.products); 
+
+              if(!this.products.some(p => p.code === product.code)) {
+          
+                  this.products.push(product);
+                  console.log (this.products); 
+
+                  return product.id;
+
+              } else {
+
+                  console.log (`This product code ${product.code} already exists.`); 
+ 
+              }
           }
         };
 
@@ -41,7 +52,7 @@ class ProductManager {
         if (product) {
           console.log(product);
         } else {
-          console.log("Not found");
+          console.log("Product not found");
         }
     };
 
@@ -56,32 +67,33 @@ class ProductManager {
     #getId(idProduct) {
       return this.products.find((product) => product.id === idProduct);
     };
+
 }
 
 
 const productManager = new ProductManager();
 
-/* muestra leyenda lista vacía */
+/* Retorna leyenda lista vacía */
 productManager.getProducts ();
 
-/* se cargan productos */
+/* Retorna arrays con productos ingresados */
 productManager.addProduct ("producto prueba","Este es un producto prueba",200,"Sin imagen","abc123", 25);
 productManager.addProduct ("producto prueba","Este es un producto prueba",200,"Sin imagen","abc124", 25);
 productManager.addProduct ("producto prueba","Este es un producto prueba",200,"Sin imagen","abc125", 25);
 
-/* muestra lista de productos cargados */
+/* Retorna lista de productos cargados */
 productManager.getProducts ();
 
-/* no agrega por código repetido --- PENDIENTEEEEEE SIN RESOLVER */
+/* No se agrega por código repetido */
 productManager.addProduct ("producto prueba","Este es un producto prueba",200,"Sin imagen","abc125", 25);
 
-/* no agrega por falta de datos */
+/* No se agrega por falta de datos */
 productManager.addProduct ("","Este es un producto prueba",200,"Sin imagen","abc126", 25);
 
-/* muestra producto seleccionado por ID */
+/* Retorna producto seleccionado por ID */
 productManager.getProductById (3);
 
-/* id no encontrado */
+/* Id no encontrado */
 productManager.getProductById (8);
 
 
